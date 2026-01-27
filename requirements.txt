@@ -1,0 +1,8 @@
+cryptography==41.0.7
+keyring==24.3.0
+click==8.1.7
+
+# Testing dependencies
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-mock==3.12.0
