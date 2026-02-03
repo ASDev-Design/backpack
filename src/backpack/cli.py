@@ -314,9 +314,6 @@ def run(script_path, non_interactive):
     
     # Get required keys directly from the loaded data
     creds_layer = agent_data.get("credentials", {})
-    # DEBUG LOG
-    print(f"DEBUG: creds_layer keys: {list(creds_layer.keys())}")
-    print(f"DEBUG: creds_layer values: {creds_layer}")
     required_keys = list(creds_layer.keys())
 
     for key_name in required_keys:
