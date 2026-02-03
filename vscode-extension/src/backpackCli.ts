@@ -1,5 +1,16 @@
 import * as cp from 'child_process';
-import * as vscode from 'vscode';
+
+export interface BackpackStatus {
+    file_path: string;
+    size: number;
+    layers: {
+        credentials: string[];
+        personality: Record<string, string>;
+        memory: Record<string, unknown>;
+        deployment: Record<string, unknown>;
+    };
+    error?: string;
+}
 
 export class BackpackCliWrapper {
     private cwd: string;
@@ -12,12 +23,12 @@ export class BackpackCliWrapper {
         try {
             const output = await this.execute('version');
             return output;
-        } catch (error) {
+        } catch {
             throw new Error('Backpack CLI not found or not working. Make sure "backpack" is in your PATH.');
         }
     }
 
-    public async getStatus(): Promise<any> {
+    public async getStatus(): Promise<BackpackStatus> {
         const output = await this.execute('status --json');
         return JSON.parse(output);
     }

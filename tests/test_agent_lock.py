@@ -84,8 +84,9 @@ class TestAgentLockCreate:
         
         # Read and verify memory is empty dict
         result = agent_lock.read()
+        assert result is not None
         assert result["memory"] == {}
-    
+
     def test_create_empty_credentials(self, test_agent_lock_path, test_master_key,
                                       sample_personality):
         """Test creation with empty credentials."""
@@ -93,10 +94,11 @@ class TestAgentLockCreate:
         agent_lock.master_key = test_master_key
         
         agent_lock.create({}, sample_personality)
-        
+
         result = agent_lock.read()
+        assert result is not None
         assert result["credentials"] == {}
-    
+
     def test_create_overwrite_existing(self, test_agent_lock_path, test_master_key,
                                       sample_credentials, sample_personality):
         """Test that create overwrites existing file."""
@@ -106,12 +108,14 @@ class TestAgentLockCreate:
         # Create first time
         agent_lock.create(sample_credentials, sample_personality)
         first_result = agent_lock.read()
-        
+
         # Create again with different data
         new_personality = {"system_prompt": "Different prompt", "tone": "casual"}
         agent_lock.create(sample_credentials, new_personality)
         second_result = agent_lock.read()
-        
+
+        assert first_result is not None
+        assert second_result is not None
         assert first_result["personality"] != second_result["personality"]
         assert second_result["personality"]["system_prompt"] == "Different prompt"
 
@@ -302,6 +306,8 @@ class TestAgentLockIntegration:
         # Verify they're independent
         result1 = agent1.read()
         result2 = agent2.read()
-        
+
+        assert result1 is not None
+        assert result2 is not None
         assert result1["personality"]["system_prompt"] == "Agent 1"
         assert result2["personality"]["system_prompt"] == "Agent 2"

@@ -134,6 +134,10 @@ class TestCLICoverage:
     def test_run_access_denied(self):
         runner = CliRunner()
         with runner.isolated_filesystem():
+            # Create dummy script
+            with open("script.py", "w") as f:
+                f.write("print('hello')")
+
             # Setup agent.lock
             with open("agent.lock", "w") as f:
                 f.write('{"layers": {"credentials": "enc", "personality": "enc", "memory": "enc"}}')

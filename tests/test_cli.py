@@ -100,6 +100,10 @@ class TestCLIRun:
         
         try:
             os.chdir(temp_dir)
+            # Create dummy script
+            with open("example_agent.py", "w") as f:
+                f.write("print('hello')")
+                
             result = runner.invoke(cli, ['run', 'example_agent.py'])
             
             assert result.exit_code != 0
@@ -114,6 +118,10 @@ class TestCLIRun:
         
         try:
             os.chdir(temp_dir)
+            # Create dummy script
+            with open("example_agent.py", "w") as f:
+                f.write("print('hello')")
+
             # Create agent.lock
             runner.invoke(cli, [
                 'init',

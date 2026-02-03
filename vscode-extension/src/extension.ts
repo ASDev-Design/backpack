@@ -4,7 +4,7 @@ import { BackpackTreeDataProvider } from './backpackTreeDataProvider';
 import { BackpackCodeLensProvider } from './backpackCodeLensProvider';
 
 export async function activate(context: vscode.ExtensionContext) {
-	console.log('Congratulations, your extension "backpack-vscode" is now active!');
+    console.log('Congratulations, your extension "backpack-vscode" is now active!');
 
     const workspaceFolder = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
     if (!workspaceFolder) {
@@ -22,32 +22,36 @@ export async function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.languages.registerCodeLensProvider(
             { language: 'python', scheme: 'file' },
-            new BackpackCodeLensProvider()
-        )
+            new BackpackCodeLensProvider(),
+        ),
     );
 
     // Commands
-    context.subscriptions.push(vscode.commands.registerCommand('backpack.init', () => {
-		const terminal = vscode.window.createTerminal('Backpack');
-        terminal.show();
-        terminal.sendText('backpack init');
-	}));
+    context.subscriptions.push(
+        vscode.commands.registerCommand('backpack.init', () => {
+            const terminal = vscode.window.createTerminal('Backpack');
+            terminal.show();
+            terminal.sendText('backpack init');
+        }),
+    );
 
-    context.subscriptions.push(vscode.commands.registerCommand('backpack.run', (fileUri?: string) => {
-        let fileToRun = fileUri;
-        if (!fileToRun && vscode.window.activeTextEditor) {
-            fileToRun = vscode.window.activeTextEditor.document.uri.fsPath;
-        }
+    context.subscriptions.push(
+        vscode.commands.registerCommand('backpack.run', (fileUri?: string) => {
+            let fileToRun = fileUri;
+            if (!fileToRun && vscode.window.activeTextEditor) {
+                fileToRun = vscode.window.activeTextEditor.document.uri.fsPath;
+            }
 
-        if (!fileToRun) {
-            vscode.window.showErrorMessage("No file selected to run.");
-            return;
-        }
+            if (!fileToRun) {
+                vscode.window.showErrorMessage('No file selected to run.');
+                return;
+            }
 
-        const terminal = vscode.window.createTerminal('Backpack Run');
-        terminal.show();
-        terminal.sendText(`backpack run "${fileToRun}"`);
-	}));
+            const terminal = vscode.window.createTerminal('Backpack Run');
+            terminal.show();
+            terminal.sendText(`backpack run "${fileToRun}"`);
+        }),
+    );
 
     // Check version
     try {
