@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "backpack"
-version = "0.1.2"
+version = "0.1.3"
 description = "Secure, portable system for managing AI agents with encrypted state, credentials, and personality configurations"
 readme = "README.md"
 requires-python = ">=3.7"
