@@ -32,7 +32,7 @@ Use this checklist to track progress on the critical path items that will have t
 - [ ] `.github/workflows/publish.yml` (optional: CI/CD)
 
 ### Success Criteria
-- ✅ `pip install backpack-agent` works
+- ✅ `pip install backpack` works
 - ✅ `backpack --help` works after installation
 - ✅ Package appears on PyPI
 - ✅ README shows pip install as primary method

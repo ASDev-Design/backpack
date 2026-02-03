@@ -70,7 +70,7 @@ def main():
     step("The agent traveled with its configuration, but your keys stayed safe.")
     
     print("\n✨ Try it yourself:")
-    print("   pip install backpack-agent")
+    print("   pip install backpack")
     print("   backpack quickstart")
 
 if __name__ == "__main__":

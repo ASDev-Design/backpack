@@ -5,7 +5,7 @@
 ### Option A: Interactive wizard (recommended)
 
 ```bash
-pip install backpack-agent
+pip install backpack
 backpack quickstart
 backpack key add OPENAI_API_KEY
 backpack run agent.py

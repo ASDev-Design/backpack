@@ -31,7 +31,7 @@ These 5 items will have the biggest immediate impact on shareability.
 - `README.md` (update installation)
 - `.github/workflows/publish.yml` (optional: CI/CD)
 
-**Success Criteria**: Users can install with `pip install backpack-agent`
+**Success Criteria**: Users can install with `pip install backpack`
 
 ---
 

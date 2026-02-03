@@ -8,35 +8,30 @@ Logging is configured here for CLI usage. By default it logs at INFO level,
 and can be controlled via the BACKPACK_LOG_LEVEL environment variable.
 """
 
-import click
 import json
 import logging
 import os
+import platform
 import shutil
 import subprocess
 import sys
-import platform
 import zipfile
 from typing import Dict, List
 
+import click
+
 from . import __version__
 from .agent_lock import AgentLock
+from .exceptions import AgentLockNotFoundError, AgentLockReadError, BackpackError, KeyNotFoundError, ValidationError
 from .keychain import (
-    store_key,
+    InvalidKeyNameError,
+    KeychainDeletionError,
+    KeychainStorageError,
+    delete_key,
     get_key,
     list_keys,
     register_key,
-    delete_key,
-    KeychainStorageError,
-    KeychainDeletionError,
-    InvalidKeyNameError,
-)
-from .exceptions import (
-    BackpackError,
-    ValidationError,
-    KeyNotFoundError,
-    AgentLockNotFoundError,
-    AgentLockReadError
+    store_key,
 )
 
 
@@ -52,7 +47,7 @@ def _configure_logging() -> logging.Logger:
         level_name = os.environ.get("BACKPACK_LOG_LEVEL", "INFO").upper()
         level = getattr(logging, level_name, logging.INFO)
         
-        handlers = [logging.StreamHandler(sys.stderr)]
+        handlers: List[logging.Handler] = [logging.StreamHandler(sys.stderr)]
         
         log_file = os.environ.get("BACKPACK_LOG_FILE")
         if log_file:
@@ -289,7 +284,7 @@ def rotate(new_key, key_file):
         
         click.echo(click.style(f"\n[OK] Re-encrypted {key_file} with new key.", fg="green"))
         click.echo(click.style("\nIMPORTANT:", fg="yellow", bold=True))
-        click.echo(f"You MUST update your AGENT_MASTER_KEY environment variable to the new key.")
+        click.echo("You MUST update your AGENT_MASTER_KEY environment variable to the new key.")
         click.echo("If you lose this key, you cannot access the agent.lock file again.")
         
     except Exception as e:

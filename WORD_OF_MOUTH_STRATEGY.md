@@ -31,7 +31,7 @@ Backpack solves a real pain point (the "Naked Agent" problem) but needs strategi
 #### 1.1 Package Distribution
 - [ ] Create `pyproject.toml` for modern Python packaging
 - [ ] Publish to PyPI as `backpack-agent` or `agent-backpack`
-- [ ] Enable `pip install backpack-agent` installation
+- [ ] Enable `pip install backpack` installation
 - [ ] Add entry point so `backpack` command works globally
 
 **Impact**: Removes installation friction, enables "try it now" moments

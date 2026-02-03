@@ -64,7 +64,7 @@ I've already started implementing **Quick Win #1: PyPI Package**:
 ### Priority Order
 
 1. **PyPI Package** ⭐⭐⭐ (STARTED)
-   - Enables `pip install backpack-agent`
+   - Enables `pip install backpack`
    - Removes biggest friction point
    - **Status**: pyproject.toml created, ready to test
 

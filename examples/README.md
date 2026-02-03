@@ -27,7 +27,7 @@ Demonstrates how multiple agents can share configuration or be orchestrated.
 
 1. Make sure you have installed Backpack:
    ```bash
-   pip install backpack-agent
+   pip install backpack
    ```
 
 2. Add required keys to your keychain:

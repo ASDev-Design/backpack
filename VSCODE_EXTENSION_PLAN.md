@@ -77,7 +77,7 @@ The **Backpack VS Code Extension** will provide a seamless interface for managin
 2.  Publish to VS Code Marketplace.
 
 ## Requirements
-*   **Backpack CLI** installed (`pip install backpack-agent`).
+*   **Backpack CLI** installed (`pip install backpack`).
 *   **Python** extension for VS Code (optional but recommended).
 
 ## Open Questions

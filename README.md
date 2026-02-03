@@ -19,7 +19,7 @@
 ## Quick Start (3 steps)
 
 ```bash
-pip install backpack-agent
+pip install backpack
 backpack quickstart          # Interactive wizard: name, credentials, personality
 backpack key add OPENAI_API_KEY   # Add your keys when prompted
 backpack run agent.py        # Run with JIT injection
@@ -102,10 +102,10 @@ Backpack creates an `agent.lock` file that travels with the agent's code in the 
 - pip
 
 ### Install from PyPI (recommended)
-
-```bash
-pip install backpack-agent
-```
+ 
+ ```bash
+ pip install backpack
+ ```
 
 ### Install from Source
 
