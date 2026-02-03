@@ -1,24 +1,19 @@
 
-import pytest
-import json
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 import keyring
 import keyring.errors
-from backpack.keychain import (
-    store_key,
-    get_key,
-    list_keys,
-    register_key,
-    delete_key,
-    _validate_key_name
-)
+import pytest
+
 from backpack.exceptions import (
     InvalidKeyNameError,
-    ValidationError,
-    KeychainStorageError,
     KeychainAccessError,
-    KeychainDeletionError
+    KeychainDeletionError,
+    KeychainStorageError,
+    ValidationError,
 )
+from backpack.keychain import _validate_key_name, delete_key, get_key, list_keys, register_key, store_key
+
 
 class TestKeychainCoverage:
     

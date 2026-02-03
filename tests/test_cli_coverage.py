@@ -1,18 +1,19 @@
 
-import pytest
 import os
-import json
-import logging
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
+import pytest
 from click.testing import CliRunner
+
 from backpack.cli import (
-    cli,
-    handle_error,
     _configure_logging,
     _get_templates_dir,
     _list_template_names,
+    cli,
+    handle_error,
 )
-from backpack.exceptions import BackpackError, ValidationError, KeychainStorageError, KeychainDeletionError
+from backpack.exceptions import BackpackError, KeychainDeletionError, KeychainStorageError
+
 
 class TestCLICoverage:
     

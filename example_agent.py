@@ -8,6 +8,7 @@ during JIT variable injection.
 
 import os
 
+
 def main():
     """
     Main agent function that uses injected environment variables.

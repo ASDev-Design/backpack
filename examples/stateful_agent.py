@@ -2,10 +2,8 @@
 Stateful Agent Example
 An agent that remembers information between runs using Backpack's encrypted memory.
 """
-import os
-import sys
-import json
 from backpack.agent_lock import AgentLock
+
 
 def main():
     print("🧠 Stateful Agent Starting...")
@@ -26,7 +24,7 @@ def main():
     run_count = memory.get("run_count", 0)
     last_message = memory.get("last_message", "None")
     
-    print(f"\n📊 Memory State:")
+    print("\n📊 Memory State:")
     print(f"   - Run Count: {run_count}")
     print(f"   - Last Message: {last_message}")
     

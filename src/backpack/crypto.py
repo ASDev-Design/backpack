@@ -9,18 +9,19 @@ secret material such as passwords, salts, or ciphertext. Only operation
 types and high-level status are logged.
 """
 
-from cryptography.fernet import Fernet, InvalidToken
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 import base64
 import logging
 import os
 
+from cryptography.fernet import Fernet, InvalidToken
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+
 from .exceptions import (
     DecryptionError,
     EncryptionError,
-    KeyDerivationError,
     InvalidPasswordError,
+    KeyDerivationError,
     ValidationError,
 )
 
@@ -155,9 +156,9 @@ def decrypt_data(encrypted_dict: dict, password: str) -> str:
         raise DecryptionError(
             "Decryption failed - invalid token",
             "The password may be incorrect or the data may be corrupted",
-        )
+        ) from None
     except (UnicodeDecodeError, ValueError) as e:
-        raise DecryptionError("Decryption failed - invalid data format", str(e))
+        raise DecryptionError("Decryption failed - invalid data format", str(e)) from e
     except (InvalidPasswordError, KeyDerivationError, ValidationError):
         raise
     except Exception as e:

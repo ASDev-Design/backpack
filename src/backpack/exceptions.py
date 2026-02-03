@@ -6,10 +6,13 @@ providing better error handling and more informative error messages.
 """
 
 
+from typing import Optional
+
+
 class BackpackError(Exception):
     """Base exception class for all Backpack-related errors."""
 
-    def __init__(self, message: str, details: str = None):
+    def __init__(self, message: str, details: Optional[str] = None):
         """
         Initialize a Backpack error.
 
@@ -34,7 +37,7 @@ class CryptoError(BackpackError):
 class DecryptionError(CryptoError):
     """Exception raised when decryption fails."""
 
-    def __init__(self, message: str = "Decryption failed", details: str = None):
+    def __init__(self, message: str = "Decryption failed", details: Optional[str] = None):
         super().__init__(
             message
             or "Failed to decrypt data. This may be due to an incorrect password, corrupted data, or invalid format.",
@@ -45,7 +48,7 @@ class DecryptionError(CryptoError):
 class EncryptionError(CryptoError):
     """Exception raised when encryption fails."""
 
-    def __init__(self, message: str = "Encryption failed", details: str = None):
+    def __init__(self, message: str = "Encryption failed", details: Optional[str] = None):
         super().__init__(
             message or "Failed to encrypt data. Please check your input and try again.",
             details,
@@ -55,7 +58,7 @@ class EncryptionError(CryptoError):
 class KeyDerivationError(CryptoError):
     """Exception raised when key derivation fails."""
 
-    def __init__(self, message: str = "Key derivation failed", details: str = None):
+    def __init__(self, message: str = "Key derivation failed", details: Optional[str] = None):
         super().__init__(
             message
             or "Failed to derive encryption key. This may indicate a problem with the password or salt.",
@@ -81,7 +84,7 @@ class KeyNotFoundError(KeychainError):
 class KeychainAccessError(KeychainError):
     """Exception raised when keychain access fails."""
 
-    def __init__(self, message: str = "Failed to access keychain", details: str = None):
+    def __init__(self, message: str = "Failed to access keychain", details: Optional[str] = None):
         super().__init__(
             message
             or "Unable to access the OS keychain. Please check your system's keychain permissions.",
@@ -92,7 +95,7 @@ class KeychainAccessError(KeychainError):
 class KeychainStorageError(KeychainError):
     """Exception raised when storing to keychain fails."""
 
-    def __init__(self, key_name: str, details: str = None):
+    def __init__(self, key_name: str, details: Optional[str] = None):
         super().__init__(
             f"Failed to store key '{key_name}' in keychain",
             details or "Please check your system's keychain permissions and available storage",
@@ -103,7 +106,7 @@ class KeychainStorageError(KeychainError):
 class KeychainDeletionError(KeychainError):
     """Exception raised when deleting from keychain fails."""
 
-    def __init__(self, key_name: str, details: str = None):
+    def __init__(self, key_name: str, details: Optional[str] = None):
         super().__init__(
             f"Failed to delete key '{key_name}' from keychain",
             details or "The key may not exist or keychain access may be denied",
@@ -129,7 +132,7 @@ class AgentLockNotFoundError(AgentLockError):
 class AgentLockCorruptedError(AgentLockError):
     """Exception raised when agent.lock file is corrupted or invalid."""
 
-    def __init__(self, file_path: str = "agent.lock", details: str = None):
+    def __init__(self, file_path: str = "agent.lock", details: Optional[str] = None):
         super().__init__(
             f"Agent lock file is corrupted or invalid: {file_path}",
             details or "The file may have been modified or encrypted with a different key",
@@ -140,7 +143,7 @@ class AgentLockCorruptedError(AgentLockError):
 class AgentLockReadError(AgentLockError):
     """Exception raised when reading agent.lock file fails."""
 
-    def __init__(self, file_path: str, details: str = None):
+    def __init__(self, file_path: str, details: Optional[str] = None):
         super().__init__(
             f"Failed to read agent lock file: {file_path}",
             details
@@ -152,7 +155,7 @@ class AgentLockReadError(AgentLockError):
 class AgentLockWriteError(AgentLockError):
     """Exception raised when writing agent.lock file fails."""
 
-    def __init__(self, file_path: str, details: str = None):
+    def __init__(self, file_path: str, details: Optional[str] = None):
         super().__init__(
             f"Failed to write agent lock file: {file_path}",
             details or "Please check file permissions and available disk space",
@@ -167,7 +170,7 @@ class ValidationError(BackpackError):
 class InvalidPathError(ValidationError):
     """Exception raised when a file path is invalid."""
 
-    def __init__(self, path: str, reason: str = None):
+    def __init__(self, path: str, reason: Optional[str] = None):
         super().__init__(
             f"Invalid path: {path}",
             reason or "The path does not exist or is not accessible",
@@ -178,7 +181,7 @@ class InvalidPathError(ValidationError):
 class InvalidKeyNameError(ValidationError):
     """Exception raised when a key name is invalid."""
 
-    def __init__(self, key_name: str, reason: str = None):
+    def __init__(self, key_name: str, reason: Optional[str] = None):
         super().__init__(
             f"Invalid key name: {key_name}",
             reason
@@ -190,7 +193,7 @@ class InvalidKeyNameError(ValidationError):
 class InvalidPasswordError(ValidationError):
     """Exception raised when a password is invalid."""
 
-    def __init__(self, reason: str = None):
+    def __init__(self, reason: Optional[str] = None):
         super().__init__(
             "Invalid password",
             reason or "Password cannot be empty",
@@ -200,7 +203,7 @@ class InvalidPasswordError(ValidationError):
 class ScriptExecutionError(BackpackError):
     """Exception raised when agent script execution fails."""
 
-    def __init__(self, script_path: str, details: str = None):
+    def __init__(self, script_path: str, details: Optional[str] = None):
         super().__init__(
             f"Failed to execute agent script: {script_path}",
             details or "Please check that the script exists and is executable",

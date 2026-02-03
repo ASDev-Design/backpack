@@ -9,9 +9,9 @@ import json
 import logging
 import os
 import time
-from typing import Dict, Any, List, Optional
+from typing import Any, Dict, List, Optional
 
-from .crypto import encrypt_data, decrypt_data, EncryptionError, DecryptionError
+from .crypto import DecryptionError, decrypt_data, encrypt_data
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +34,7 @@ class AuditLogger:
         self.file_path = file_path
         self.master_key = os.environ.get("AGENT_MASTER_KEY", "default-key")
 
-    def log_event(self, event_type: str, details: Dict[str, Any] = None) -> None:
+    def log_event(self, event_type: str, details: Optional[Dict[str, Any]] = None) -> None:
         """
         Log an event to the encrypted audit log.
 

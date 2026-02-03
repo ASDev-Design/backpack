@@ -3,9 +3,10 @@ Financial Analyst agent - uses Backpack-injected credentials and personality.
 Run with: backpack run agent.py
 """
 
-import os
-import logging
 import json
+import logging
+import os
+
 
 def main():
     # Setup basic logging

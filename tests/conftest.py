@@ -3,9 +3,10 @@ Pytest configuration and shared fixtures for Backpack tests.
 """
 
 import os
+import shutil
 import sys
 import tempfile
-import shutil
+
 import pytest
 
 # Add src directory to Python path so tests can import backpack without

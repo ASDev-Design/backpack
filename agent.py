@@ -5,6 +5,7 @@ Uses credentials and personality from agent.lock (injected by Backpack).
 
 import os
 
+
 def main():
     # Credentials are injected by Backpack when you run: backpack run agent.py
     keys = ['OPENAI_API_KEY']

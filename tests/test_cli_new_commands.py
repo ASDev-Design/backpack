@@ -1,11 +1,12 @@
 import os
-import json
 import zipfile
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 from click.testing import CliRunner
-from backpack.cli import cli
+
 from backpack.agent_lock import AgentLock
+from backpack.cli import cli
+
 
 class TestCLINewCommands:
     
@@ -89,8 +90,9 @@ class TestCLINewCommands:
     def test_export_custom_name(self):
         runner = CliRunner()
         with runner.isolated_filesystem():
-            with open("agent.py", "w") as f: f.write("code")
-            
+            with open("agent.py", "w") as f:
+                f.write("code")
+
             result = runner.invoke(cli, ["export", "my_agent"])
             assert "Exported 1 files to my_agent.zip" in result.output
             assert os.path.exists("my_agent.zip")

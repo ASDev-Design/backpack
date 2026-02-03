@@ -5,6 +5,7 @@ A simple agent that uses a single credential and a system prompt.
 import os
 import sys
 
+
 def main():
     print("🤖 Basic Agent Starting...")
     
@@ -24,7 +25,7 @@ def main():
     system_prompt = os.environ.get("AGENT_SYSTEM_PROMPT", "Default prompt")
     tone = os.environ.get("AGENT_TONE", "Default tone")
     
-    print(f"🧠 Personality loaded:")
+    print("🧠 Personality loaded:")
     print(f"   - System Prompt: {system_prompt}")
     print(f"   - Tone: {tone}")
     

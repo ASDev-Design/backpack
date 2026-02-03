@@ -3,14 +3,12 @@ Tests for CLI module - command-line interface functionality.
 """
 
 import os
-import sys
-import pytest
-import tempfile
-import shutil
+
 from click.testing import CliRunner
-from backpack.cli import cli
+
 from backpack.agent_lock import AgentLock
-from backpack.keychain import store_key, register_key, delete_key
+from backpack.cli import cli
+from backpack.keychain import register_key, store_key
 
 
 class TestCLIInit:
@@ -319,7 +317,11 @@ class TestCLITemplate:
         runner = CliRunner()
         result = runner.invoke(cli, ['template', 'list'])
         assert result.exit_code == 0
-        assert "financial_analyst" in result.output or "code_reviewer" in result.output or "twitter_bot" in result.output
+        assert (
+            "financial_analyst" in result.output
+            or "code_reviewer" in result.output
+            or "twitter_bot" in result.output
+        )
 
     def test_template_use(self, mock_keyring, temp_dir, clean_env):
         """Test template use creates agent.lock and agent.py from template."""

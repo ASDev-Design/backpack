@@ -11,10 +11,10 @@ No decrypted contents are ever logged.
 import json
 import logging
 import os
-from typing import Dict, Any, Optional
+from typing import Any, Dict, Optional
 
 from .audit import AuditLogger
-from .crypto import encrypt_data, decrypt_data, DecryptionError, EncryptionError
+from .crypto import DecryptionError, EncryptionError, decrypt_data, encrypt_data
 from .exceptions import (
     AgentLockNotFoundError,
     AgentLockReadError,
@@ -38,7 +38,7 @@ class AgentLock:
     All data is encrypted using a master key (from AGENT_MASTER_KEY env var).
     """
 
-    def __init__(self, file_path: str = "agent.lock", master_key: str = None):
+    def __init__(self, file_path: str = "agent.lock", master_key: Optional[str] = None):
         """
         Initialize an AgentLock instance.
 
@@ -50,7 +50,13 @@ class AgentLock:
         self.master_key = master_key or os.environ.get("AGENT_MASTER_KEY", "default-key")
         self.audit_logger = AuditLogger()
 
-    def create(self, credentials: Dict[str, str], personality: Dict[str, str], memory: Dict[str, Any] = None, deployment: Dict[str, Any] = None) -> None:
+    def create(
+        self,
+        credentials: Dict[str, str],
+        personality: Dict[str, str],
+        memory: Optional[Dict[str, Any]] = None,
+        deployment: Optional[Dict[str, Any]] = None,
+    ) -> None:
         """
         Create a new agent.lock file with encrypted layers.
 
@@ -87,10 +93,10 @@ class AgentLock:
             data = {
                 "version": "1.0",
                 "layers": {
-                    "credentials": encrypt_data(json.dumps(credentials), self.master_key),
-                    "personality": encrypt_data(json.dumps(personality), self.master_key),
-                    "memory": encrypt_data(json.dumps(memory), self.master_key),
-                    "deployment": encrypt_data(json.dumps(deployment), self.master_key),
+                    "credentials": encrypt_data(json.dumps(credentials, sort_keys=True), self.master_key),
+                    "personality": encrypt_data(json.dumps(personality, sort_keys=True), self.master_key),
+                    "memory": encrypt_data(json.dumps(memory, sort_keys=True), self.master_key),
+                    "deployment": encrypt_data(json.dumps(deployment, sort_keys=True), self.master_key),
                 },
             }
         except (EncryptionError, ValidationError) as e:

@@ -2,10 +2,12 @@
 Tests for agent_lock module - agent lock file management.
 """
 
-import os
 import json
+import os
+from unittest.mock import patch
+
 import pytest
-from unittest.mock import patch, MagicMock
+
 from backpack.agent_lock import AgentLock
 
 

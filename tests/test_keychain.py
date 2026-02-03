@@ -2,13 +2,12 @@
 Tests for keychain module - OS keychain integration.
 """
 
-import pytest
 import json
-from unittest.mock import MagicMock, patch
-from backpack.keychain import (
-    store_key, get_key, list_keys, register_key, delete_key,
-    SERVICE_NAME
-)
+from unittest.mock import patch
+
+import pytest
+
+from backpack.keychain import SERVICE_NAME, delete_key, get_key, list_keys, register_key, store_key
 
 
 @pytest.fixture(autouse=True)

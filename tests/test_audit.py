@@ -1,11 +1,13 @@
 
-import os
 import json
+import os
 import time
-from unittest.mock import patch, mock_open, MagicMock
+from unittest.mock import patch
+
 import pytest
+
 from backpack.audit import AuditLogger
-from backpack.crypto import encrypt_data, decrypt_data
+
 
 class TestAuditLogger:
     @pytest.fixture

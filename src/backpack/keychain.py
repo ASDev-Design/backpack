@@ -17,10 +17,10 @@ import keyring.errors
 
 from .audit import AuditLogger
 from .exceptions import (
-    KeychainAccessError,
-    KeychainStorageError,
-    KeychainDeletionError,
     InvalidKeyNameError,
+    KeychainAccessError,
+    KeychainDeletionError,
+    KeychainStorageError,
     ValidationError,
 )
 

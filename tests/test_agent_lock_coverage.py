@@ -1,17 +1,17 @@
 
+from unittest.mock import mock_open, patch
+
 import pytest
-import os
-import json
-from unittest.mock import patch, mock_open, MagicMock
+
 from backpack.agent_lock import AgentLock
+from backpack.crypto import EncryptionError
 from backpack.exceptions import (
-    ValidationError,
+    AgentLockReadError,
     AgentLockWriteError,
     InvalidPathError,
-    AgentLockReadError,
-    AgentLockNotFoundError
+    ValidationError,
 )
-from backpack.crypto import EncryptionError
+
 
 class TestAgentLockCoverage:
     def setup_method(self):
@@ -100,17 +100,29 @@ class TestAgentLockCoverage:
 
     @patch('os.path.exists', return_value=True)
     @patch('os.path.isfile', return_value=True)
-    @patch('builtins.open', new_callable=mock_open, read_data='{"layers": {"credentials": "x", "personality": "y", "memory": "z"}}')
+    @patch(
+        'builtins.open',
+        new_callable=mock_open,
+        read_data='{"layers": {"credentials": "x", "personality": "y", "memory": "z"}}',
+    )
     @patch('backpack.agent_lock.decrypt_data')
-    def test_read_decrypted_content_not_json(self, mock_decrypt, mock_file, mock_isfile, mock_exists):
+    def test_read_decrypted_content_not_json(
+        self, mock_decrypt, mock_file, mock_isfile, mock_exists
+    ):
         mock_decrypt.return_value = "not json"
         assert self.lock.read() is None
 
     @patch('os.path.exists', return_value=True)
     @patch('os.path.isfile', return_value=True)
-    @patch('builtins.open', new_callable=mock_open, read_data='{"layers": {"credentials": "x", "personality": "y", "memory": "z"}}')
+    @patch(
+        'builtins.open',
+        new_callable=mock_open,
+        read_data='{"layers": {"credentials": "x", "personality": "y", "memory": "z"}}',
+    )
     @patch('backpack.agent_lock.decrypt_data')
-    def test_read_unexpected_error_during_decryption(self, mock_decrypt, mock_file, mock_isfile, mock_exists):
+    def test_read_unexpected_error_during_decryption(
+        self, mock_decrypt, mock_file, mock_isfile, mock_exists
+    ):
         mock_decrypt.side_effect = Exception("Unexpected")
         assert self.lock.read() is None
 

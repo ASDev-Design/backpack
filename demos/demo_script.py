@@ -2,9 +2,10 @@
 Backpack Visual Demo Script
 Run this script to see a simulated demo of Backpack in action.
 """
+import os
 import sys
 import time
-import os
+
 
 def type_print(text, delay=0.03):
     """Simulate typing effect."""

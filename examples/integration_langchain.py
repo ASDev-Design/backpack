@@ -6,13 +6,12 @@ Requirements:
     pip install langchain openai
 """
 import os
-import sys
 
 # Check if libraries are installed
 try:
+    from langchain.chains import LLMChain
     from langchain.llms import OpenAI
     from langchain.prompts import PromptTemplate
-    from langchain.chains import LLMChain
 except ImportError:
     # Allow running in simulation mode even without libraries
     print("⚠️  LangChain not installed. Running in simulation mode.")

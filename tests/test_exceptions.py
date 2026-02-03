@@ -2,11 +2,17 @@
 Tests for custom exception classes.
 """
 
-import pytest
 from backpack.exceptions import (
-    BackpackError, CryptoError, DecryptionError, EncryptionError,
-    KeychainError, KeyNotFoundError, AgentLockError,
-    AgentLockNotFoundError, ValidationError, InvalidPasswordError
+    AgentLockError,
+    AgentLockNotFoundError,
+    BackpackError,
+    CryptoError,
+    DecryptionError,
+    EncryptionError,
+    InvalidPasswordError,
+    KeychainError,
+    KeyNotFoundError,
+    ValidationError,
 )
 
 
