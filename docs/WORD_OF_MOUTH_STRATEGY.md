@@ -259,7 +259,7 @@ Create a `templates/` directory with ready-to-use agents:
 
 These can be implemented immediately for maximum impact:
 
-1. **Create `pyproject.toml`** - 30 minutes, enables pip install
+1. **Create `pyproject.toml`** - 30 minutes, enables `pip install backpack`
 2. **Add 2-3 agent templates** - 2 hours, immediate value
 3. **Create `backpack demo` command** - 1 hour, shows magic
 4. **Enhance README with comparison table** - 30 minutes, clarifies value

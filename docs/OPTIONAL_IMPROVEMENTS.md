@@ -149,7 +149,7 @@ logger.debug("Key retrieved from keychain", extra={"key_name": key_name})
 [backpack]
 master_key_env = "AGENT_MASTER_KEY"
 log_level = "INFO"
-keychain_service = "backpack-agent"
+keychain_service = "backpack"
 default_template_dir = "~/.backpack/templates"
 ```
 

@@ -703,7 +703,7 @@ def info():
 @cli.command()
 def version():
     """Show version information."""
-    click.echo(f"backpack-agent version {__version__}")
+    click.echo(f"backpack version {__version__}")
 
 
 @cli.command()

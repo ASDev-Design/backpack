@@ -52,7 +52,7 @@ class TestCLINewCommands:
     def test_version(self):
         runner = CliRunner()
         result = runner.invoke(cli, ["version"])
-        assert "backpack-agent version" in result.output
+        assert "backpack version" in result.output
 
     def test_doctor_all_ok(self):
         runner = CliRunner()

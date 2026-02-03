@@ -29,6 +29,7 @@ env/
 ENV/
 env.bak/
 venv.bak/
+.venv/
 
 # IDEs
 .vscode/
@@ -37,6 +38,7 @@ venv.bak/
 *.swo
 *~
 .DS_Store
+.trae/
 
 # Backpack specific
 agent.lock
@@ -44,6 +46,7 @@ agent.lock
 .env
 .env.local
 .env.*.local
+agent_audit.log
 
 # Testing
 .pytest_cache/
@@ -51,6 +54,7 @@ agent.lock
 htmlcov/
 .tox/
 .hypothesis/
+coverage.xml
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -79,3 +83,7 @@ logs/
 # OS
 Thumbs.db
 .DS_Store
+
+# Documentation site (if using mkdocs/sphinx)
+site/
+_build/

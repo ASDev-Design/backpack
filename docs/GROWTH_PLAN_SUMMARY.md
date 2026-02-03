@@ -17,7 +17,7 @@ Make Backpack **instantly tryable, immediately valuable, and naturally shareable
 
 ### 🚀 Quick Wins (Do First - 6 hours total)
 
-1. **PyPI Package** (2-3h) - `pip install backpack-agent`
+1. **PyPI Package** (2-3h) - `pip install backpack`
 2. **Quick Start Wizard** (2-3h) - `backpack quickstart`
 3. **Agent Templates** (4-6h) - 3 ready-to-use agents
 4. **Demo Command** (2-3h) - `backpack demo`
