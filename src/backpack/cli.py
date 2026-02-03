@@ -369,6 +369,11 @@ def run(script_path, non_interactive):
 
     env_vars["AGENT_SYSTEM_PROMPT"] = agent_data["personality"]["system_prompt"]
     env_vars["AGENT_TONE"] = agent_data["personality"]["tone"]
+    
+    # Inject deployment configuration
+    deployment_config = agent_data.get("deployment", {})
+    if deployment_config:
+        env_vars["AGENT_DEPLOYMENT_CONFIG"] = json.dumps(deployment_config)
 
     # Merge injected env vars with current environment
     env = os.environ.copy()
@@ -501,6 +506,22 @@ def template_list():
             click.echo(f"  {name}")
 
 
+def _load_mixins(mixins: List[str]) -> Dict[str, Any]:
+    """Load and merge common configuration templates."""
+    common_dir = os.path.join(_get_templates_dir(), "common")
+    config = {}
+    for mixin in mixins:
+        path = os.path.join(common_dir, f"{mixin}.json")
+        if os.path.exists(path):
+            try:
+                with open(path) as f:
+                    mixin_data = json.load(f)
+                    config.update(mixin_data)
+            except Exception as e:
+                logger.warning(f"Failed to load mixin {mixin}: {e}")
+    return config
+
+
 @template.command("use")
 @click.argument("name")
 @click.option("--dir", "target_dir", type=click.Path(), default=".", help="Directory to copy template into (default: current)")
@@ -525,18 +546,22 @@ def template_use(name, target_dir):
 
     creds_list = manifest.get("credentials", [])
     personality = manifest.get("personality", {})
+    mixins = manifest.get("mixins", [])
+    
     creds = {c: f"placeholder_{c.lower()}" for c in creds_list}
     personality_data = {
         "system_prompt": personality.get("system_prompt", "You are a helpful AI assistant."),
         "tone": personality.get("tone", "professional"),
     }
+    
+    deployment_data = _load_mixins(mixins)
 
     os.makedirs(target_dir, exist_ok=True)
     agent_lock = AgentLock(file_path=os.path.join(target_dir, "agent.lock"))
     if os.path.exists(agent_lock.file_path) and not click.confirm(f"{agent_lock.file_path} exists. Overwrite?"):
         click.echo("Skipped agent.lock.")
     else:
-        agent_lock.create(creds, personality_data)
+        agent_lock.create(creds, personality_data, deployment=deployment_data)
         click.echo(click.style(f"[OK] Created {agent_lock.file_path}", fg="green"))
 
     agent_src = os.path.join(template_path, "agent.py")
@@ -732,7 +757,8 @@ def status(json_output):
                 "layers": {
                     "credentials": list(data.get("credentials", {}).keys()),
                     "personality": data.get("personality", {}),
-                    "memory": data.get("memory", {})
+                    "memory": data.get("memory", {}),
+                    "deployment": data.get("deployment", {})
                 }
             }
             click.echo(json.dumps(output, indent=2))
@@ -756,6 +782,9 @@ def status(json_output):
         
         memory = data.get("memory", {})
         click.echo(f"    - Memory: {len(memory)} items")
+
+        deployment = data.get("deployment", {})
+        click.echo(f"    - Deployment: {len(deployment)} items")
         
     except Exception as e:
         if json_output:

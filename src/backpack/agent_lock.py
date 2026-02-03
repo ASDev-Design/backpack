@@ -50,7 +50,7 @@ class AgentLock:
         self.master_key = master_key or os.environ.get("AGENT_MASTER_KEY", "default-key")
         self.audit_logger = AuditLogger()
 
-    def create(self, credentials: Dict[str, str], personality: Dict[str, str], memory: Dict[str, Any] = None) -> None:
+    def create(self, credentials: Dict[str, str], personality: Dict[str, str], memory: Dict[str, Any] = None, deployment: Dict[str, Any] = None) -> None:
         """
         Create a new agent.lock file with encrypted layers.
 
@@ -58,6 +58,7 @@ class AgentLock:
             credentials: Dictionary mapping credential names to placeholder values
             personality: Dictionary containing system prompts and configuration
             memory: Optional dictionary for ephemeral agent state (default: empty dict)
+            deployment: Optional dictionary for deployment configuration (default: empty dict)
 
         Raises:
             ValidationError: If input data is invalid
@@ -66,6 +67,8 @@ class AgentLock:
         """
         if memory is None:
             memory = {}
+        if deployment is None:
+            deployment = {}
 
         # Validate inputs
         if not isinstance(credentials, dict):
@@ -77,6 +80,9 @@ class AgentLock:
         if not isinstance(memory, dict):
             raise ValidationError("Memory must be a dictionary", f"Got type: {type(memory).__name__}")
 
+        if not isinstance(deployment, dict):
+            raise ValidationError("Deployment must be a dictionary", f"Got type: {type(deployment).__name__}")
+
         try:
             data = {
                 "version": "1.0",
@@ -84,6 +90,7 @@ class AgentLock:
                     "credentials": encrypt_data(json.dumps(credentials), self.master_key),
                     "personality": encrypt_data(json.dumps(personality), self.master_key),
                     "memory": encrypt_data(json.dumps(memory), self.master_key),
+                    "deployment": encrypt_data(json.dumps(deployment), self.master_key),
                 },
             }
         except (EncryptionError, ValidationError) as e:
@@ -163,6 +170,12 @@ class AgentLock:
                 "personality": json.loads(decrypt_data(data["layers"]["personality"], self.master_key)),
                 "memory": json.loads(decrypt_data(data["layers"]["memory"], self.master_key)),
             }
+            # Optional deployment layer for backward compatibility
+            if "deployment" in data["layers"]:
+                result["deployment"] = json.loads(decrypt_data(data["layers"]["deployment"], self.master_key))
+            else:
+                result["deployment"] = {}
+
             logger.debug("Successfully read agent.lock file", extra={"path": self.file_path})
             self.audit_logger.log_event("lock_read", {"path": self.file_path})
             return result
@@ -200,7 +213,7 @@ class AgentLock:
 
         try:
             agent_data["memory"] = memory
-            self.create(agent_data["credentials"], agent_data["personality"], memory)
+            self.create(agent_data["credentials"], agent_data["personality"], memory, agent_data.get("deployment", {}))
             self.audit_logger.log_event("lock_memory_updated", {"path": self.file_path})
         except (ValidationError, EncryptionError, AgentLockWriteError):
             raise

@@ -1,5 +1,6 @@
 {
   "name": "backpack-vscode",
+  "publisher": "pacagent",
   "displayName": "Backpack",
   "description": "Backpack Agent Container System Integration",
   "version": "0.0.1",
